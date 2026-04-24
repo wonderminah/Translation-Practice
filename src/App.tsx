@@ -2,7 +2,8 @@ import { useState } from 'react'
 import './App.css'
 
 function App() {
-  const [input, setInput] = useState('')
+  const [origin, setOrigin] = useState('')
+  const [target, setTarget] = useState('')
 
   return (
     <div className="page">
@@ -31,13 +32,13 @@ function App() {
         </div>
 
         <div className="input-box">
-          <div className="input-box__wrapper">
+          <div className="input-box__wrapper origin">
             <input
               className="input-box__field"
               type="text"
               placeholder="한국어 문장을 입력하세요"
-              value={input}
-              onChange={(e) => setInput(e.target.value)}
+              value={origin}
+              onChange={(e) => setOrigin(e.target.value)}
             />
             <button className="input-box__btn">
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
@@ -47,10 +48,26 @@ function App() {
             </button>
           </div>
 
-          <p className="input-box__hint">
-            <kbd className="input-box__kbd">Tab</kbd> 을 누르면 영어 입력창이 나타납니다
-          </p>
+          <div className="input-box__wrapper target">
+            <input
+              className="input-box__field"
+              type="text"
+              placeholder="영어 문장으로 번역해 보세요"
+              value={target}
+              onChange={(e) => setTarget(e.target.value)}
+            />
+            <button className="input-box__btn">
+              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                <line x1="5" y1="12" x2="19" y2="12" />
+                <polyline points="12 5 19 12 12 19" />
+              </svg>
+            </button>
+          </div>
         </div>
+
+        <p className="input-box__hint">
+          <kbd className="input-box__kbd">Tab</kbd> 을 누르면 영어 입력창이 나타납니다
+        </p>
       </main>
     </div>
   )

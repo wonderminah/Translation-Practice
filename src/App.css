@@ -72,7 +72,7 @@ body {
   gap: 36px;
   padding: 40px 24px;
   width: 100%;
-  max-width: 680px;
+  max-width: 780px;
 }
 
 /* Prompt */
@@ -102,7 +102,6 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 16px;
 }
 
 .input-box__wrapper {
@@ -111,10 +110,19 @@ body {
   align-items: center;
   background: #fff;
   border: 1px solid #e4e4e4;
-  border-radius: 999px;
   padding: 10px 10px 10px 24px;
   box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   gap: 10px;
+}
+
+.input-box__wrapper.origin {
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+
+.input-box__wrapper.target {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .input-box__field {
