@@ -31,21 +31,19 @@ export default function FeedbackPage() {
   return (
     <>
       <main className="feedback">
-        <div className="feedback__origin-card">
-          <div className="feedback__origin-header">
-            <span className="feedback__pin">📌</span>
-            <span className="feedback__origin-label">오늘의 문장 (내가 입력한 한국어)</span>
-          </div>
-          <div className="feedback__origin-body">
-            <p className="feedback__origin-text">{origin}</p>
+        <div className="feedback__fixed-top">
+          <div className="feedback__origin-card">
+            <div className="feedback__origin-header">
+              <span className="feedback__pin">📌</span>
+              <span className="feedback__origin-label">오늘의 문장 (내가 입력한 한국어)</span>
+            </div>
+            <div className="feedback__origin-body">
+              <p className="feedback__origin-text">{origin}</p>
+            </div>
           </div>
         </div>
 
         <div className="feedback__history">
-          <div className="feedback__history-header">
-            <span className="feedback__history-title">번역 히스토리</span>
-          </div>
-
           <div className="feedback__cards">
             {attempts.map((attempt) => (
               <div key={attempt.id} className="feedback__card">
@@ -71,29 +69,27 @@ export default function FeedbackPage() {
             ))}
           </div>
         </div>
-
-      </main>
-
-      <div className="feedback__input-bar">
-        <div className="input-box">
-          <div className="input-box__wrapper">
-            <input
-              className="input-box__field"
-              type="text"
-              placeholder="더 자연스럽고 정확한 영어로 다시 써보세요."
-              value={retryInput}
-              onChange={(e) => setRetryInput(e.target.value)}
-              onKeyDown={handleRetryKeyDown}
-            />
-            <button className="input-box__btn">
-              <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                <line x1="5" y1="12" x2="19" y2="12" />
-                <polyline points="12 5 19 12 12 19" />
-              </svg>
-            </button>
+        <div className="feedback__fixed-bottom">
+          <div className="feedback__input-box">
+            <div className="feedback__input-wrapper">
+              <input
+                className="feedback__input-field"
+                type="text"
+                placeholder="더 자연스럽고 정확한 영어로 다시 써보세요."
+                value={retryInput}
+                onChange={(e) => setRetryInput(e.target.value)}
+                onKeyDown={handleRetryKeyDown}
+              />
+              <button className="feedback__input-btn">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                  <line x1="5" y1="12" x2="19" y2="12" />
+                  <polyline points="12 5 19 12 12 19" />
+                </svg>
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </main >
     </>
   )
 }

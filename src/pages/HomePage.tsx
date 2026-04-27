@@ -41,10 +41,10 @@ export default function HomePage() {
         <p className="prompt__subtitle">한국어로 먼저 입력해보세요.</p>
       </div>
 
-      <div className="input-box">
-        <div className={`input-box__wrapper${showTargetInputBox ? ' origin--entered' : ''}`}>
+      <div className="home__input-box">
+        <div className={`home__input-wrapper${showTargetInputBox ? ' origin--entered' : ''}`}>
           <input
-            className="input-box__field"
+            className="home__input-field"
             type="text"
             placeholder="한국어 문장을 입력하세요"
             value={origin}
@@ -52,7 +52,7 @@ export default function HomePage() {
             onKeyDown={handleOriginKeyDown}
           />
           {!showTargetInputBox && (
-            <button className="input-box__btn" onClick={handleOriginEntered}>
+            <button className="home__input-btn" onClick={handleOriginEntered}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -62,9 +62,9 @@ export default function HomePage() {
         </div>
 
         {showTargetInputBox && (
-          <div className="input-box__wrapper target">
+          <div className="home__input-wrapper target">
             <input
-              className="input-box__field"
+              className="home__input-field"
               type="text"
               ref={targetInputRef}
               placeholder="영어 문장으로 번역해 보세요"
@@ -72,7 +72,7 @@ export default function HomePage() {
               onChange={(e) => setTarget(e.target.value)}
               onKeyDown={handleTargetKeyDown}
             />
-            <button className="input-box__btn" onClick={handleTargetEntered}>
+            <button className="home__input-btn" onClick={handleTargetEntered}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
@@ -82,8 +82,8 @@ export default function HomePage() {
         )}
       </div>
 
-      <p className="input-box__hint">
-        <kbd className="input-box__kbd">Enter</kbd> 을 누르면 {showTargetInputBox ? '입력한 영어 문장을 AI가 피드백합니다' : '영어 입력창이 나타납니다'}
+      <p className="home__input-hint">
+        <kbd className="home__input-kbd">Enter</kbd> 을 누르면 {showTargetInputBox ? '입력한 영어 문장을 AI가 피드백합니다' : '영어 입력창이 나타납니다'}
       </p>
     </main>
   )
