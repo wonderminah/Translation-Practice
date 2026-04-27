@@ -13,10 +13,14 @@ export default function HomePage() {
     }
   }, [showTargetInputBox])
 
+  // origin 이 제출되었을 경우 (화살표 버튼 클릭)
+  const handleOriginEntered = () => {
+    if (origin.trim()) setShowTargetInputBox(true)
+  }
+
+  // origin 이 제출되었을 경우 (Enter 키 클릭)
   const handleOriginKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
-    if (e.key === 'Enter' && !e.nativeEvent.isComposing && origin.trim()) {
-      setShowTargetInputBox(true)
-    }
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) handleOriginEntered()
   }
 
   return (
@@ -37,7 +41,7 @@ export default function HomePage() {
             onKeyDown={handleOriginKeyDown}
           />
           {!showTargetInputBox && (
-            <button className="input-box__btn">
+            <button className="input-box__btn" onClick={handleOriginEntered}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
