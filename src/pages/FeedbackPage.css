@@ -1,0 +1,258 @@
+.feedback {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  padding-bottom: 100px;
+  width: 100%;
+  max-width: 780px;
+}
+
+.feedback__input-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 16px 24px 24px;
+  background: #f5f5f5;
+  display: flex;
+  justify-content: center;
+}
+
+.feedback__input-bar .input-box {
+  max-width: 780px;
+}
+
+/* Origin card */
+.feedback__origin-card {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #fff;
+  border: 1px solid #e4e4e4;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+}
+
+.feedback__origin-header {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 10px;
+}
+
+.feedback__origin-label {
+  font-size: 13px;
+  color: #888;
+}
+
+.feedback__origin-body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+}
+
+.feedback__origin-text {
+  font-size: 17px;
+  font-weight: 600;
+  color: #111;
+  line-height: 1.5;
+}
+
+.feedback__change-btn {
+  flex-shrink: 0;
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
+.feedback__change-btn:hover {
+  background: #f5f5f5;
+}
+
+/* History */
+.feedback__history {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback__history-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback__history-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #111;
+}
+
+.feedback__history-all-btn {
+  background: none;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 6px 14px;
+  font-size: 13px;
+  color: #555;
+  cursor: pointer;
+}
+
+.feedback__history-all-btn:hover {
+  background: #f5f5f5;
+}
+
+.feedback__cards {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+/* Feedback card */
+.feedback__card {
+  background: #fff;
+  border: 1px solid #e4e4e4;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback__card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback__card-meta {
+  font-size: 13px;
+  color: #888;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.feedback__card-divider {
+  color: #ddd;
+}
+
+.feedback__card-score {
+  font-size: 13px;
+  color: #aaa;
+}
+
+.feedback__card-score-placeholder {
+  font-size: 13px;
+  color: #bbb;
+}
+
+.feedback__card-sentence {
+  font-size: 15px;
+  color: #111;
+  line-height: 1.6;
+}
+
+.feedback__card-feedback {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 16px;
+  min-height: 60px;
+  display: flex;
+  align-items: center;
+}
+
+.feedback__card-feedback-placeholder {
+  font-size: 14px;
+  color: #bbb;
+}
+
+/* Retry */
+.feedback__retry {
+  background: #fff;
+  border: 1px solid #e4e4e4;
+  border-radius: 16px;
+  padding: 20px 24px;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.feedback__retry-label {
+  font-size: 14px;
+  font-weight: 600;
+  color: #111;
+}
+
+.feedback__retry-input-wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.feedback__retry-input {
+  width: 100%;
+  border: none;
+  outline: none;
+  font-size: 14px;
+  color: #333;
+  resize: none;
+  font-family: inherit;
+  line-height: 1.6;
+  background: transparent;
+}
+
+.feedback__retry-input::placeholder {
+  color: #bbb;
+}
+
+.feedback__retry-count {
+  font-size: 12px;
+  color: #bbb;
+  text-align: right;
+}
+
+.feedback__retry-actions {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.feedback__hint-btn {
+  background: none;
+  border: none;
+  font-size: 14px;
+  color: #888;
+  cursor: pointer;
+  padding: 0;
+}
+
+.feedback__hint-btn:hover {
+  color: #444;
+}
+
+.feedback__retry-btn {
+  background: #2d7d4f;
+  border: none;
+  border-radius: 10px;
+  padding: 10px 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.feedback__retry-btn:hover {
+  background: #236040;
+}

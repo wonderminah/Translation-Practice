@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 import './HomePage.css'
 
 export default function HomePage() {
@@ -6,6 +7,7 @@ export default function HomePage() {
   const [target, setTarget] = useState('')
   const [showTargetInputBox, setShowTargetInputBox] = useState(false)
   const targetInputRef = useRef<HTMLInputElement>(null)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (showTargetInputBox) {
@@ -13,14 +15,23 @@ export default function HomePage() {
     }
   }, [showTargetInputBox])
 
-  // origin 이 제출되었을 경우 (화살표 버튼 클릭)
+
   const handleOriginEntered = () => {
     if (origin.trim()) setShowTargetInputBox(true)
   }
 
-  // origin 이 제출되었을 경우 (Enter 키 클릭)
   const handleOriginKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter' && !e.nativeEvent.isComposing) handleOriginEntered()
+  }
+
+  const handleTargetEntered = () => {
+    if (target.trim()) {
+      navigate(`/translation/${crypto.randomUUID()}`, { state: { origin, target } })
+    }
+  }
+
+  const handleTargetKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === 'Enter' && !e.nativeEvent.isComposing) handleTargetEntered()
   }
 
   return (
@@ -31,7 +42,7 @@ export default function HomePage() {
       </div>
 
       <div className="input-box">
-        <div className={`input-box__wrapper origin${!showTargetInputBox ? ' origin--alone' : ''}`}>
+        <div className={`input-box__wrapper${showTargetInputBox ? ' origin--entered' : ''}`}>
           <input
             className="input-box__field"
             type="text"
@@ -59,8 +70,9 @@ export default function HomePage() {
               placeholder="영어 문장으로 번역해 보세요"
               value={target}
               onChange={(e) => setTarget(e.target.value)}
+              onKeyDown={handleTargetKeyDown}
             />
-            <button className="input-box__btn">
+            <button className="input-box__btn" onClick={handleTargetEntered}>
               <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
                 <line x1="5" y1="12" x2="19" y2="12" />
                 <polyline points="12 5 19 12 12 19" />
