@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react'
-import './TranslatePage.css'
+import './HomePage.css'
 
-export default function TranslatePage() {
+export default function HomePage() {
   const [origin, setOrigin] = useState('')
   const [target, setTarget] = useState('')
   const [showTargetInputBox, setShowTargetInputBox] = useState(false)

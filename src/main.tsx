@@ -3,14 +3,14 @@ import { createRoot } from 'react-dom/client'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
 import './main.css'
 import Layout from './components/Layout'
-import TranslatePage from './pages/TranslatePage'
+import HomePage from './pages/HomePage'
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <Layout />,
     children: [
-      { index: true, element: <TranslatePage /> },
+      { index: true, element: <HomePage /> },
     ],
   },
 ])
