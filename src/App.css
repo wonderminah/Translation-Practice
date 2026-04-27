@@ -106,6 +106,7 @@ body {
 
 .input-box__wrapper {
   width: 100%;
+  height: 60px;
   display: flex;
   align-items: center;
   background: #fff;
@@ -120,9 +121,26 @@ body {
   border-top-right-radius: 20px;
 }
 
+.input-box__wrapper.origin--alone {
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
 .input-box__wrapper.target {
   border-bottom-left-radius: 20px;
   border-bottom-right-radius: 20px;
+  animation: slideDown 0.5s ease-out;
 }
 
 .input-box__field {
