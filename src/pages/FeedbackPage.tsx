@@ -85,7 +85,7 @@ export default function FeedbackPage() {
                   <span className="feedback__card-score">
                     {attempt.score !== null
                       ? <strong>{attempt.score}</strong>
-                      : <span className="feedback__card-score-placeholder">/100</span>
+                      : <span className="feedback__card-score-placeholder">점수 불러오는 중...</span>
                     }
                   </span>
                 </div>
