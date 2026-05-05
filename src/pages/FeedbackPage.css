@@ -130,6 +130,12 @@
   color: #aaa;
 }
 
+.feedback__card-score strong {
+  font-size: 13px;
+  font-weight: 700;
+  color: #2d7d4f;
+}
+
 .feedback__card-score-placeholder {
   font-size: 13px;
   color: #bbb;
@@ -150,9 +156,19 @@
   align-items: center;
 }
 
+.feedback__card-feedback--loading {
+  opacity: 0.6;
+}
+
 .feedback__card-feedback-placeholder {
   font-size: 14px;
   color: #bbb;
+}
+
+.feedback__card-feedback-text {
+  font-size: 14px;
+  color: #444;
+  line-height: 1.7;
 }
 
 /* Retry */

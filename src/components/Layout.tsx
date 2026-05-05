@@ -1,12 +1,14 @@
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import './Layout.css'
 
 export default function Layout() {
+  const navigate = useNavigate()
+
   return (
     <div className="page">
       <nav className="navbar">
         <div className="navbar__logo">
-          <span className="navbar__logo-text">EngDiary</span>
+          <span className="navbar__logo-text" onClick={() => navigate('/')}>EngDiary</span>
         </div>
         <div className="navbar__right">
           <div className="navbar__streak">
