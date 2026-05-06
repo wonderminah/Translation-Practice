@@ -1,21 +1,16 @@
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
+import { fetchSessions } from '../lib/supabase'
+import type { Session } from '../lib/supabase'
 import './Layout.css'
 
 const SIDEBAR_EXPANDED = 250
 const SIDEBAR_COLLAPSED = 50
 
-const MOCK_SESSIONS = [
-  { id: '1', origin: '오늘 날씨가 정말 좋다.' },
-  { id: '2', origin: '나는 매일 아침 커피를 마셔.' },
-  { id: '3', origin: '이 영화는 정말 감동적이었어.' },
-  { id: '4', origin: '주말에 친구들이랑 여행을 갔어.' },
-  { id: '5', origin: '새로운 걸 배우는 게 즐거워.' },
-]
-
 export default function Layout() {
   const navigate = useNavigate()
   const [collapsed, setCollapsed] = useState(false)
+  const [sessions, setSessions] = useState<Session[]>([])
 
   useEffect(() => {
     document.documentElement.style.setProperty(
@@ -23,6 +18,10 @@ export default function Layout() {
       `${collapsed ? SIDEBAR_COLLAPSED : SIDEBAR_EXPANDED}px`,
     )
   }, [collapsed])
+
+  useEffect(() => {
+    fetchSessions().then(setSessions).catch(() => {})
+  }, [])
 
   return (
     <div className="page">
@@ -41,7 +40,7 @@ export default function Layout() {
         <div className="sidebar__history">
           <span className="sidebar__section-label">History</span>
           <ul className="sidebar__session-list">
-            {MOCK_SESSIONS.map((s) => (
+            {sessions.map((s) => (
               <li key={s.id} className="sidebar__session-item">
                 {s.origin}
               </li>
