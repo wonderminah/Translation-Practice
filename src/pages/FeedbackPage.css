@@ -2,9 +2,6 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  /* gap: 20px; */
-  /* padding-bottom: 100px; */
-  padding: 0 24px 100px;
   width: 100%;
   max-width: 780px;
 }
@@ -269,7 +266,6 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 0 24px;
 }
 
 .feedback__input-wrapper {

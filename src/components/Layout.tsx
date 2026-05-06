@@ -5,7 +5,7 @@ import type { Session } from '../lib/supabase'
 import './Layout.css'
 
 const SIDEBAR_EXPANDED = 250
-const SIDEBAR_COLLAPSED = 50
+const SIDEBAR_COLLAPSED = 70
 
 export default function Layout() {
   const navigate = useNavigate()
@@ -20,7 +20,7 @@ export default function Layout() {
   }, [collapsed])
 
   useEffect(() => {
-    fetchSessions().then(setSessions).catch(() => {})
+    fetchSessions().then(setSessions).catch(() => { })
   }, [])
 
   return (
