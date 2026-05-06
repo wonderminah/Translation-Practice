@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
+import { createSession, saveAttempt } from '../lib/supabase'
 import './HomePage.css'
 
 export default function HomePage() {
@@ -24,10 +25,11 @@ export default function HomePage() {
     if (e.key === 'Enter' && !e.nativeEvent.isComposing) handleOriginEntered()
   }
 
-  const handleTargetEntered = () => {
-    if (target.trim()) {
-      navigate(`/translation/${crypto.randomUUID()}`, { state: { origin, target } })
-    }
+  const handleTargetEntered = async () => {
+    if (!target.trim()) return
+    const session = await createSession(origin.trim())
+    await saveAttempt(session.id, target.trim(), null, null)
+    navigate(`/translation/${session.id}`)
   }
 
   const handleTargetKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {

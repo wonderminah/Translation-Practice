@@ -35,10 +35,25 @@ export async function saveAttempt(
   sentence: string,
   score: number | null,
   feedback: string | null,
+): Promise<Attempt> {
+  const { data, error } = await supabase
+    .from('attempts')
+    .insert({ session_id: sessionId, sentence, score, feedback })
+    .select()
+    .single()
+  if (error) throw error
+  return data
+}
+
+export async function updateAttempt(
+  id: string,
+  score: number | null,
+  feedback: string | null,
 ): Promise<void> {
   const { error } = await supabase
     .from('attempts')
-    .insert({ session_id: sessionId, sentence, score, feedback })
+    .update({ score, feedback })
+    .eq('id', id)
   if (error) throw error
 }
 

@@ -1,11 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
-import { useLocation, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 import { fetchFeedback } from '../lib/claude'
-import { createSession, saveAttempt, fetchSessionWithAttempts } from '../lib/supabase'
+import { saveAttempt, updateAttempt, fetchSessionWithAttempts } from '../lib/supabase'
 import './FeedbackPage.css'
 
 interface Attempt {
   id: number
+  dbId: string
   sentence: string
   createdAt: Date
   score: number | null
@@ -15,66 +16,20 @@ interface Attempt {
 
 export default function FeedbackPage() {
   const { id: urlSessionId } = useParams<{ id: string }>()
-  const locationState = (useLocation().state || null) as { origin: string; target: string } | null
 
   const [origin, setOrigin] = useState('')
   const [retryInput, setRetryInput] = useState('')
   const [attempts, setAttempts] = useState<Attempt[]>([])
-  const [pageLoading, setPageLoading] = useState(!locationState)
-  const sessionIdRef = useRef<string | null>(null)
+  const [pageLoading, setPageLoading] = useState(true)
   const originRef = useRef('')
-  const locationStateRef = useRef(locationState)
 
-  useEffect(() => {
-    setAttempts([])
-    sessionIdRef.current = null
-    originRef.current = ''
-
-    const state = locationStateRef.current
-    locationStateRef.current = null
-
-    if (state) {
-      setPageLoading(false)
-      originRef.current = state.origin
-      setOrigin(state.origin)
-      setAttempts([
-        { id: 1, sentence: state.target, createdAt: new Date(), score: null, feedback: null, loading: true },
-      ])
-      createSession(state.origin).then((session) => {
-        sessionIdRef.current = session.id
-        loadFeedback(1, state.target)
-      })
-    } else if (urlSessionId) {
-      setPageLoading(true)
-      sessionIdRef.current = urlSessionId
-      fetchSessionWithAttempts(urlSessionId)
-        .then(({ session, attempts: dbAttempts }) => {
-          originRef.current = session.origin
-          setOrigin(session.origin)
-          setAttempts(
-            dbAttempts.map((a, i) => ({
-              id: i + 1,
-              sentence: a.sentence,
-              createdAt: new Date(a.created_at),
-              score: a.score,
-              feedback: a.feedback,
-              loading: false,
-            }))
-          )
-        })
-        .finally(() => setPageLoading(false))
-    }
-  }, [urlSessionId])
-
-  const loadFeedback = async (id: number, sentence: string) => {
+  const loadFeedback = async (id: number, sentence: string, dbId: string) => {
     try {
       const result = await fetchFeedback(originRef.current, sentence)
       setAttempts((prev) =>
         prev.map((a) => a.id === id ? { ...a, score: result.score, feedback: result.feedback, loading: false } : a)
       )
-      if (sessionIdRef.current) {
-        await saveAttempt(sessionIdRef.current, sentence, result.score, result.feedback)
-      }
+      await updateAttempt(dbId, result.score, result.feedback)
     } catch {
       setAttempts((prev) =>
         prev.map((a) => a.id === id ? { ...a, feedback: '피드백을 불러오지 못했어요.', loading: false } : a)
@@ -82,19 +37,48 @@ export default function FeedbackPage() {
     }
   }
 
-  const handleRetryEntered = () => {
-    if (!retryInput.trim()) return
-    const newAttempt: Attempt = {
-      id: attempts.length + 1,
-      sentence: retryInput.trim(),
-      createdAt: new Date(),
-      score: null,
-      feedback: null,
-      loading: true,
-    }
-    setAttempts((prev) => [...prev, newAttempt])
-    loadFeedback(newAttempt.id, newAttempt.sentence)
+  useEffect(() => {
+    if (!urlSessionId) return
+    setAttempts([])
+    setOrigin('')
+    setPageLoading(true)
+
+    fetchSessionWithAttempts(urlSessionId)
+      .then(({ session, attempts: dbAttempts }) => {
+        originRef.current = session.origin
+        setOrigin(session.origin)
+        const mapped: Attempt[] = dbAttempts.map((a, i) => ({
+          id: i + 1,
+          dbId: a.id,
+          sentence: a.sentence,
+          createdAt: new Date(a.created_at),
+          score: a.score,
+          feedback: a.feedback,
+          loading: a.feedback === null,
+        }))
+        setAttempts(mapped)
+        mapped.filter((a) => a.loading).forEach((a) => loadFeedback(a.id, a.sentence, a.dbId))
+      })
+      .finally(() => setPageLoading(false))
+  }, [urlSessionId])
+
+  const handleRetryEntered = async () => {
+    if (!retryInput.trim() || !urlSessionId) return
+    const sentence = retryInput.trim()
+    const tempId = attempts.length + 1
+    setAttempts((prev) => [...prev, { id: tempId, dbId: '', sentence, createdAt: new Date(), score: null, feedback: null, loading: true }])
     setRetryInput('')
+    try {
+      const result = await fetchFeedback(originRef.current, sentence)
+      const saved = await saveAttempt(urlSessionId, sentence, result.score, result.feedback)
+      setAttempts((prev) =>
+        prev.map((a) => a.id === tempId ? { ...a, dbId: saved.id, score: result.score, feedback: result.feedback, loading: false } : a)
+      )
+    } catch {
+      setAttempts((prev) =>
+        prev.map((a) => a.id === tempId ? { ...a, feedback: '피드백을 불러오지 못했어요.', loading: false } : a)
+      )
+    }
   }
 
   const handleRetryKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
