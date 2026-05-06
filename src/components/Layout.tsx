@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { Outlet, useNavigate } from 'react-router-dom'
-import { fetchSessions } from '../lib/supabase'
+import { supabase, fetchSessions } from '../lib/supabase'
 import type { Session } from '../lib/supabase'
 import './Layout.css'
 
@@ -20,7 +20,16 @@ export default function Layout() {
   }, [collapsed])
 
   useEffect(() => {
-    fetchSessions().then(setSessions).catch(() => { })
+    fetchSessions().then(setSessions).catch(() => {})
+
+    const channel = supabase
+      .channel('sessions-insert')
+      .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'sessions' }, (payload) => {
+        setSessions((prev) => [payload.new as Session, ...prev])
+      })
+      .subscribe()
+
+    return () => { supabase.removeChannel(channel) }
   }, [])
 
   return (
