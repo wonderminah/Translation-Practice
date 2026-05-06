@@ -86,78 +86,78 @@ export default function FeedbackPage() {
   }
 
   if (pageLoading) {
-    return <main className="feedback"><p style={{ color: '#bbb', padding: '40px 24px' }}>불러오는 중...</p></main>
-  }
-
-  return (
-    <>
-      <main className="feedback">
-        <div className="feedback__fixed-top">
-          <div className="feedback__origin-card">
-            <div className="feedback__origin-header">
-              <span className="feedback__pin">📌</span>
-              <span className="feedback__origin-label">오늘의 문장 (내가 입력한 한국어)</span>
-            </div>
-            <div className="feedback__origin-body">
-              <p className="feedback__origin-text">{origin}</p>
-            </div>
-          </div>
-        </div>
-
-        <div className="feedback__history">
-          <div className="feedback__cards">
-            {attempts.map((attempt) => (
-              <div key={attempt.id} className="feedback__card">
-                <div className="feedback__card-header">
-                  <span className="feedback__card-meta">
-                    시도 {attempt.id}
-                    <span className="feedback__card-divider">|</span>
-                    {attempt.createdAt.toLocaleDateString('ko-KR', {
-                      year: 'numeric', month: '2-digit', day: '2-digit',
-                    }).replace(/\. /g, '.').replace('.', '.')} {attempt.createdAt.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
-                  </span>
-                  <span className="feedback__card-score">
-                    {attempt.score !== null
-                      ? <strong>{attempt.score}</strong>
-                      : <span className="feedback__card-score-placeholder">채점 중...</span>
-                    }
-                  </span>
-                </div>
-
-                <p className="feedback__card-sentence">{attempt.sentence}</p>
-
-                <div className={`feedback__card-feedback${attempt.loading ? ' feedback__card-feedback--loading' : ''}`}>
-                  {attempt.loading
-                    ? <span className="feedback__card-feedback-placeholder">피드백 불러오는 중...</span>
-                    : <p className="feedback__card-feedback-text">{attempt.feedback}</p>
-                  }
-                </div>
+    return <main className="feedback"><p style={{ color: '#bbb', padding: '40px 24px' }}></p></main>
+  } else {
+    return (
+      <>
+        <main className="feedback">
+          <div className="feedback__fixed-top">
+            <div className="feedback__origin-card">
+              <div className="feedback__origin-header">
+                <span className="feedback__pin">📌</span>
+                <span className="feedback__origin-label">오늘의 문장 (내가 입력한 한국어)</span>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="feedback__fixed-bottom">
-          <div className="feedback__input-box">
-            <div className="feedback__input-wrapper">
-              <input
-                className="feedback__input-field"
-                type="text"
-                placeholder="더 자연스럽고 정확한 영어로 다시 써보세요."
-                value={retryInput}
-                onChange={(e) => setRetryInput(e.target.value)}
-                onKeyDown={handleRetryKeyDown}
-              />
-              <button className="feedback__input-btn" onClick={handleRetryEntered}>
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
-                  <line x1="5" y1="12" x2="19" y2="12" />
-                  <polyline points="12 5 19 12 12 19" />
-                </svg>
-              </button>
+              <div className="feedback__origin-body">
+                <p className="feedback__origin-text">{origin}</p>
+              </div>
             </div>
           </div>
-        </div>
-      </main>
-    </>
-  )
+
+          <div className="feedback__history">
+            <div className="feedback__cards">
+              {attempts.map((attempt) => (
+                <div key={attempt.id} className="feedback__card">
+                  <div className="feedback__card-header">
+                    <span className="feedback__card-meta">
+                      시도 {attempt.id}
+                      <span className="feedback__card-divider">|</span>
+                      {attempt.createdAt.toLocaleDateString('ko-KR', {
+                        year: 'numeric', month: '2-digit', day: '2-digit',
+                      }).replace(/\. /g, '.').replace('.', '.')} {attempt.createdAt.toLocaleTimeString('ko-KR', { hour: '2-digit', minute: '2-digit' })}
+                    </span>
+                    <span className="feedback__card-score">
+                      {attempt.score !== null
+                        ? <strong>{attempt.score}</strong>
+                        : <span className="feedback__card-score-placeholder">채점 중...</span>
+                      }
+                    </span>
+                  </div>
+
+                  <p className="feedback__card-sentence">{attempt.sentence}</p>
+
+                  <div className={`feedback__card-feedback${attempt.loading ? ' feedback__card-feedback--loading' : ''}`}>
+                    {attempt.loading
+                      ? <span className="feedback__card-feedback-placeholder">피드백 불러오는 중...</span>
+                      : <p className="feedback__card-feedback-text">{attempt.feedback}</p>
+                    }
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="feedback__fixed-bottom">
+            <div className="feedback__input-box">
+              <div className="feedback__input-wrapper">
+                <input
+                  className="feedback__input-field"
+                  type="text"
+                  placeholder="더 자연스럽고 정확한 영어로 다시 써보세요."
+                  value={retryInput}
+                  onChange={(e) => setRetryInput(e.target.value)}
+                  onKeyDown={handleRetryKeyDown}
+                />
+                <button className="feedback__input-btn" onClick={handleRetryEntered}>
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                    <polyline points="12 5 19 12 12 19" />
+                  </svg>
+                </button>
+              </div>
+            </div>
+          </div>
+        </main>
+      </>
+    )
+  }
 }

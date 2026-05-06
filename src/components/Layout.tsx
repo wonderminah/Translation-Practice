@@ -41,7 +41,7 @@ export default function Layout() {
           <span className="sidebar__section-label">History</span>
           <ul className="sidebar__session-list">
             {sessions.map((s) => (
-              <li key={s.id} className="sidebar__session-item" onClick={() => navigate(`/translation/${s.id}`)}>
+              <li key={s.id} className="sidebar__session-item" onClick={() => navigate(`/feedback/${s.id}`)}>
                 {s.origin}
               </li>
             ))}

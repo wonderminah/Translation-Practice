@@ -4,6 +4,7 @@
   flex-direction: column;
   width: 100%;
   max-width: 780px;
+  padding-bottom: 100px;
 }
 
 .feedback__fixed-top {

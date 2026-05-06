@@ -29,7 +29,7 @@ export default function HomePage() {
     if (!target.trim()) return
     const session = await createSession(origin.trim())
     await saveAttempt(session.id, target.trim(), null, null)
-    navigate(`/translation/${session.id}`)
+    navigate(`/feedback/${session.id}`)
   }
 
   const handleTargetKeyDown = (e: React.KeyboardEvent<HTMLInputElement>) => {
