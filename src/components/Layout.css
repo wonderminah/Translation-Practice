@@ -7,7 +7,7 @@
   flex-shrink: 0;
   display: flex;
   flex-direction: column;
-  padding: 15px;
+  padding: 8px;
   background: #f5f5f5;
   border-right: 1px solid #e4e4e4;
   overflow: hidden;
@@ -21,6 +21,7 @@
   gap: 10px;
   margin-bottom: 32px;
   white-space: nowrap;
+  padding: 7px;
 }
 
 .sidebar__menu-btn {
@@ -59,9 +60,53 @@
 
 /* Collapsed state */
 .sidebar--collapsed .sidebar__logo-text,
-.sidebar--collapsed .sidebar__name-text {
+.sidebar--collapsed .sidebar__name-text,
+.sidebar--collapsed .sidebar__history {
   opacity: 0;
   pointer-events: none;
+}
+
+/* History section */
+.sidebar__history {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  opacity: 1;
+  transition: opacity 0.15s ease;
+  overflow: hidden;
+}
+
+.sidebar__section-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #aaa;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 0 8px;
+  margin-bottom: 4px;
+  white-space: nowrap;
+}
+
+.sidebar__session-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.sidebar__session-item {
+  font-size: 13px;
+  color: #444;
+  padding: 6px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sidebar__session-item:hover {
+  background: #ebebeb;
 }
 
 /* Bottom section */
@@ -70,6 +115,7 @@
   display: flex;
   flex-direction: row;
   gap: 10px;
+  padding: 7px;
 }
 
 .sidebar__avatar {
