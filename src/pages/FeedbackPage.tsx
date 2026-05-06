@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useLocation } from 'react-router-dom'
 import { fetchFeedback } from '../lib/claude'
+import { createSession, saveAttempt } from '../lib/supabase'
 import './FeedbackPage.css'
 
 interface Attempt {
@@ -18,6 +19,20 @@ export default function FeedbackPage() {
   const [attempts, setAttempts] = useState<Attempt[]>([
     { id: 1, sentence: target, createdAt: new Date(), score: null, feedback: null, loading: true },
   ])
+  const sessionIdRef = useRef<string | null>(null)
+  const initialFetchDone = useRef(false)
+
+  useEffect(() => {
+    if (initialFetchDone.current) return
+    initialFetchDone.current = true
+
+    const init = async () => {
+      const session = await createSession(origin)
+      sessionIdRef.current = session.id
+      loadFeedback(1, target)
+    }
+    init()
+  }, [])
 
   const loadFeedback = async (id: number, sentence: string) => {
     try {
@@ -25,16 +40,15 @@ export default function FeedbackPage() {
       setAttempts((prev) =>
         prev.map((a) => a.id === id ? { ...a, score: result.score, feedback: result.feedback, loading: false } : a)
       )
+      if (sessionIdRef.current) {
+        await saveAttempt(sessionIdRef.current, sentence, result.score, result.feedback)
+      }
     } catch {
       setAttempts((prev) =>
         prev.map((a) => a.id === id ? { ...a, feedback: '피드백을 불러오지 못했어요.', loading: false } : a)
       )
     }
   }
-
-  useEffect(() => {
-    loadFeedback(1, target)
-  }, [])
 
   const handleRetryEntered = () => {
     if (!retryInput.trim()) return
@@ -85,7 +99,7 @@ export default function FeedbackPage() {
                   <span className="feedback__card-score">
                     {attempt.score !== null
                       ? <strong>{attempt.score}</strong>
-                      : <span className="feedback__card-score-placeholder">점수 불러오는 중...</span>
+                      : <span className="feedback__card-score-placeholder">채점 중...</span>
                     }
                   </span>
                 </div>
